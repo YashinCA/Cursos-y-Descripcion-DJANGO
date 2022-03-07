@@ -1,0 +1,17 @@
+{% extends "app/base.html" %}
+{% comment %} PODEMOS UTILIZAR NUESTRO HTML BASE {% endcomment %}
+{% block titulo %}Listado de Cursos{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1>Seguro que quieres eliminar al usuario?</h1>
+    <hr>
+    <p><strong>Nombre:</strong> {{curso.name}}</p>
+    <p><strong>Descripción:</strong> {{curso.description}}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class='btn btn-danger'>Si, ELIMINAR!!!</button>
+        <a href="{%url 'cursos:index'%}" class='btn btn-sm btn-secondary'>Cancelar y Volver</a>
+    </form>
+</div>
+{% endblock  %}

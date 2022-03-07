@@ -1,0 +1,74 @@
+{% extends "app/base.html" %}
+{% comment %} PODEMOS UTILIZAR NUESTRO HTML BASE {% endcomment %}
+{% block titulo %}Listado de Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1>Listado de Usuarios</h1>
+    <hr>
+    <table id="tabla-datatable" class='table table-striped table-bordered table-hover'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Usuario</th>
+                <th>Correos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbod>
+            {%for usuario in usuarios%}
+            <tr>
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.apellido}}</td>
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.email}}</td>
+                <td>
+                    <button 
+                    data-url="{%url 'usuarios:eliminar_ajax' id=usuario.id%}"
+                    class='btn btn-sm btn-danger btnMostrarModal'>
+                    <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                    </button> 
+                    <a 
+                    href="{%url 'usuarios:eliminar' id=usuario.id%}"
+                    class='btn btn-sm btn-warning'>
+                    <i class="fa fa-trash fa-lg" aria-hidden="true">Normal</i>
+                    </a> 
+                    <a href="{%url 'usuarios:editar' id=usuario.id%}" class='btn btn-sm btn-success'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                    <a href="{%url 'usuarios:editar_forms' id=usuario.id%}" class='btn btn-sm btn-success'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Forms</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbod>
+    </table>
+    <a href="{% url 'usuarios:agregar'%}" class='btn btn-primary'><i class="fa fa-user-plus" aria-hidden="true"></i> Añadir Registro </a>
+    <a href="{% url 'usuarios:agregar_forms'%}" class='btn btn-primary'><i class="fa fa-user-plus" aria-hidden="true"></i> Añadir Registro FORMS</a>
+</div>
+
+{% endblock  %}
+{% block scripts %}
+
+<script>
+$(document).ready( function () {
+    let htmlDataTable = "<'row'<'col-sm-12 col-md-8'lB><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>";
+    $('#tabla-datatable').DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.4/i18n/es-cl.json"
+                },
+                responsive: true,
+                dom: htmlDataTable,
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            });
+    
+} );
+
+</script>
+
+
+{% endblock  %}

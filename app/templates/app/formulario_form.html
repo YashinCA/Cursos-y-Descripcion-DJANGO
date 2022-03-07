@@ -1,0 +1,43 @@
+{% extends "app/base.html" %}
+{% block titulo %}Formulario de Cursos{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1> <i class="fa fa-user-circle" aria-hidden="true"></i> Formulario de Curso</h1>
+    <hr>
+    <div class='row'>
+        <div class='col-6'>
+            <form class='' action='' method='post'>
+                {% csrf_token %}
+                {{ formModel.non_field_errors }}
+
+                {% for field in formModel %}
+                <div class="mb-3 row">
+                    <label for="{{ field.id_for_label }}" class="col-sm-4 col-form-label">{{ field.label }}</label>
+                    <div class="col-sm-8">
+                        {{ field }}
+                    </div>
+
+                    {% if field.errors %}
+
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {% for error in field.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button class="btn btn-primary offset-4" type="submit">Enviar</button>
+            </form>
+            
+        </div>
+    </div>
+    
+</div>
+{% endblock  %}
